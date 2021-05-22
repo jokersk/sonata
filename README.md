@@ -6,7 +6,6 @@ Make your laravel test easier
 
 ```
 composer require jokersk/sonata
-
 ```
 
 in your test file add ``` Sonata\Traits\LetsPlaySonata ``` trait, that it! 
