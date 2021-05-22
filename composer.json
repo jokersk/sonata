@@ -1,0 +1,18 @@
+{
+    "name": "jokersk/sonata",
+    "description": "for laravel testing",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jokersk",
+            "email": "jokersk119@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Sonata\\": "src"
+        }
+    },
+    "require": {}
+}
