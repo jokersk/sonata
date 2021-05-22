@@ -2,6 +2,15 @@
 
 Make your laravel test easier
 
+## Install
+
+```
+composer require jokersk/sonata
+
+```
+
+in your test file add ``` Sonata\Traits\LetsPlaySonata ``` trait, that it! 
+
 ## Use
 
 ```php
