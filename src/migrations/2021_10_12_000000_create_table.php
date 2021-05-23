@@ -17,6 +17,7 @@ class CreateTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('title');
+            $table->string('body')->default('');
             $table->timestamps();
         });
 

@@ -13,6 +13,8 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'body'];
+
     protected static function newFactory() {
         return PostFactory::new();
     }

@@ -11,6 +11,7 @@ class Sonata
     public $created;
     protected $prevCreated;
     protected $createCount;
+    protected $attributes = [];
     public static $by;
 
     public function reset()
@@ -20,19 +21,33 @@ class Sonata
         $this->createCount = 1;
     }
 
-    public function create($count = 1, ?string $class = null, ?callable $callback = null)
+    public function create()
     {
-        if (is_string($count)) {
-            $class = $count;
+        $args = func_get_args();
+
+        if (func_num_args() === 1 && is_string($args[0])) {
+            $class = $args[0];
             $count = 1;
         }
 
-
-        $this->created[$class] = Factory::factory($class, $count);
-
-        if ($callback) {
-            $callback($this->created[$class]);
+        if (func_num_args() > 1) {
+            if (is_string($args[0]) && is_array($args[1])) {
+                $class = $args[0];
+                $count = 1;
+                $this->attributes = $args[1];
+            } else {
+                $count = $args[0];
+                $class = $args[1];
+            }
         }
+
+        $this->created[$class] = Factory::factory($class, $count, $this->attributes);
+        $this->attributes = [];
+
+        if (func_num_args() === 3 && is_callable($args[2])) {
+            $args[2]($this->created[$class]);
+        }
+
         $this->prevCreated = $class;
         $this->createCount = $count;
         return $this;
@@ -84,6 +99,12 @@ class Sonata
     public function by(string $name)
     {
         Sonata::$by = $name;
+        return $this;
+    }
+
+    public function set(array $attributes)
+    {
+        $this->attributes = $attributes;
         return $this;
     }
 }

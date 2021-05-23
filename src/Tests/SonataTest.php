@@ -157,6 +157,5 @@ class SonataTest extends TestCase
             $role->name,
             $user->roles->first()->name
         );
-
     }
 }
