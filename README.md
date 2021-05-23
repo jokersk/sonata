@@ -66,7 +66,7 @@ but with sonata, you can create the models like
 $this->create(Post::class)->with(Comment::class);
 
 ```
-no matter ```HasMany, BelongsTo, BelongsToMany, morphMany, morphToMany```, you can just create ```with``` function, sonata will handle the ```save, associate, or attach``` for you
+no matter ```HasMany, BelongsTo, BelongsToMany, morphMany, morphToMany```, you can just use ```with``` function, sonata will handle the ```save, associate, or attach``` for you
 
 
 if you want to get created models you can
