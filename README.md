@@ -38,7 +38,7 @@ $post = $this->create(Post::class)->getCreated();
 
 ```
 
-### has many
+### create with relations
 
 now we have a model `\App\Models\Comment`, and in `\App\Models\Post` model have HasMany relation like
 
@@ -66,6 +66,8 @@ but with sonata, you can create the models like
 $this->create(Post::class)->with(Comment::class);
 
 ```
+no matter ```HasMany, BelongsTo, BelongsToMany, morphMany, morphToMany```, you can just create ```with``` function, sonata will handle the ```save, associate, or attach``` for you
+
 
 if you want to get created models you can
 
