@@ -97,3 +97,9 @@ $this->set([
     'body' => 'hi'
 ])->create(Post::class);
 ```
+to set attributes to  ``` with ``` function, we can do that
+```php
+$this->create(Post::class)->with(Comment::class, [
+    'body' => 'foo'
+]);
+```
