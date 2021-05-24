@@ -53,7 +53,7 @@ class Sonata
         return $this;
     }
 
-    public function save($class)
+    protected function save($class)
     {
         return $this->create($this->createCount, $class, function ($children) use ($class) {
             foreach ($this->created[$this->prevCreated] as $key => $value) {
@@ -63,8 +63,11 @@ class Sonata
         });
     }
 
-    public function with($class)
+    public function with($class, $attributes = null)
     {
+        if (! is_null($attributes)) {
+            $this->attributes = $attributes;
+        }
         return $this->save($class);
     }
 

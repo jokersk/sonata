@@ -43,4 +43,15 @@ class AttributesTest extends TestCase
             'body' => 'hhh'
         ]);
     }
+
+    /** @test */
+    public function can_set_attribute_to_with() {
+        $this->create(Post::class)->with(Comment::class, [
+            'body' => 'hhh'
+        ]);
+
+        $this->assertDatabaseHas('comments', [
+            'body' => 'hhh'
+        ]);
+    }
 }

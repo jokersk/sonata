@@ -34,6 +34,7 @@ class Post extends Model
         return $this->morphMany(Media::class, 'mediaable');
     }
 
+
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
