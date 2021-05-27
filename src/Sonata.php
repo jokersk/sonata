@@ -31,6 +31,7 @@ class Sonata
         }
 
         if (func_num_args() > 1) {
+            //$this->create(FOO::class, ['foo' => 'bar'])
             if (is_string($args[0]) && is_array($args[1])) {
                 $class = $args[0];
                 $count = 1;

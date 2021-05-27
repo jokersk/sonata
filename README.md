@@ -103,3 +103,11 @@ $this->create(Post::class)->with(Comment::class, [
     'body' => 'foo'
 ]);
 ```
+
+### Overvide function name
+by default Sonata will find the currect function name, but sometimes your function name is unpredictable
+eg. ``` Post ``` model has many ``` Comment ```, so you will have a function call ``` comments ```, but sometimes will call the function
+``` activeComments ```, in this case, you can call
+```php
+$this->create(Post::class)->by('activeComments')->with(Comment::class);
+```
