@@ -66,19 +66,19 @@ but with sonata, you can create the models like
 $this->create(Post::class)->with(Comment::class);
 
 ```
-no matter ```HasMany, BelongsTo, BelongsToMany, morphMany, morphToMany```, you can just use ```with``` function, sonata will handle the ```save, associate, or attach``` for you
 
+no matter `HasMany, BelongsTo, BelongsToMany, morphMany, morphToMany`, you can just use `with` function, sonata will handle the `save, associate, or attach` for you
 
 if you want to get created models you can
 
 ```php
-[$post, $comment] = $this->create(Post::class)->with(Comment::class)->getCreated([Post::class, Comment::class]);
+[$post, $comment] = $this->create(Post::class)->with(Comment::class)->get([Post::class, Comment::class]);
 ```
 
 or
 
 ```php
-[$post, $comment] = $this->create(Post::class)->with(Comment::class)->getCreated();
+[$post, $comment] = $this->create(Post::class)->with(Comment::class)->get();
 
 ```
 
@@ -90,14 +90,18 @@ $this->create(Post::class, [
     'body' => 'hi'
 ]);
 ```
+
 or
+
 ```php
 $this->set([
     'title' => 'abc',
     'body' => 'hi'
 ])->create(Post::class);
 ```
-to set attributes to  ``` with ``` function, we can do that
+
+to set attributes to `with` function, we can do that
+
 ```php
 $this->create(Post::class)->with(Comment::class, [
     'body' => 'foo'
@@ -105,9 +109,18 @@ $this->create(Post::class)->with(Comment::class, [
 ```
 
 ### Overvide function name
+
 by default Sonata will find the currect function name, but sometimes your function name is unpredictable
-eg. ``` Post ``` model has many ``` Comment ```, so you will have a function call ``` comments ```, but sometimes will call the function
-``` activeComments ```, in this case, you can call
+eg. `Post` model has many `Comment`, so you will have a function call `comments`, but sometimes will call the function
+`activeComments`, in this case, you can call
+
 ```php
 $this->create(Post::class)->by('activeComments')->with(Comment::class);
+```
+
+### Create relations from existing model
+can use ``` createFrom ``` methods to create relation with existing model
+```php
+$post = Post::factory()->create();
+$comment = $this->createFrom($post)->with(Comment::class)->get(Comment::class);
 ```
