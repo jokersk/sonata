@@ -4,6 +4,7 @@ namespace Sonata;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 
 class Sonata
@@ -45,6 +46,7 @@ class Sonata
         $this->created[$class] = Factory::factory($class, $count, $this->attributes);
         $this->attributes = [];
 
+        //$this->create(1, foo, function() {})
         if (func_num_args() === 3 && is_callable($args[2])) {
             $args[2]($this->created[$class]);
         }
@@ -64,9 +66,17 @@ class Sonata
         });
     }
 
+    public function createFrom(Model $model)
+    {
+        $this->prevCreated = get_class($model);
+        $this->created[$this->prevCreated] = collect([$model]);
+        $this->createCount = 1;
+        return $this;
+    }
+
     public function with($class, $attributes = null)
     {
-        if (! is_null($attributes)) {
+        if (!is_null($attributes)) {
             $this->attributes = $attributes;
         }
         return $this->save($class);
@@ -91,6 +101,11 @@ class Sonata
     }
 
     public function created($keys = null)
+    {
+        return $this->getCreated($keys);
+    }
+
+    public function get($keys = null)
     {
         return $this->getCreated($keys);
     }

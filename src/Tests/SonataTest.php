@@ -158,4 +158,12 @@ class SonataTest extends TestCase
             $user->roles->first()->name
         );
     }
+
+    /** @test */
+    public function can_create_child_with_existing_model() {
+        $post = Post::factory()->create();
+        $comment = $this->createFrom($post)->with(Comment::class)->get(Comment::class);
+
+        $this->assertEquals($comment->id, $post->comments->first()->id);
+    }
 }
