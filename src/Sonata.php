@@ -126,4 +126,47 @@ class Sonata
         $this->attributes = $attributes;
         return $this;
     }
+
+    public static function createMock($path, $result) {
+        $paths = explode("->", $path);
+        $class = new MockClass;
+        $first = array_shift($paths);
+        $first = new MockParse($first);
+        if (count($paths) == 0) {
+            $class->attributes[$first->toString()] = $result;
+        } else {
+            $class->attributes[$first->toString()] = static::createMock(implode('->', $paths), $result);
+        }
+        return $class;
+    }
+}
+class MockParse {
+    protected $string;
+    protected $match;
+    public function __construct(String $string) {
+        $this->string = $string;
+        preg_match('/(.*)\(.*\)/', $this->string, $match);
+        $this->match = $match;
+    }
+    public function toString() {
+        return $this->isFunc()? $this->funcName() : $this->string;
+    }
+    public function funcName() {
+        return $this->match[1];
+    }
+    public function isFunc()
+    {
+        return $this->match[0]?? false;
+    }
+}
+class MockClass {
+    public $attributes = [];
+    public function __call($name, $arguments)
+    {
+        return $this->attributes[$name];
+    }
+    public function __get($name)
+    {
+        return $this->attributes[$name];
+    }
 }

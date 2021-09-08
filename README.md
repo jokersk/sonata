@@ -124,3 +124,9 @@ can use ``` createFrom ``` methods to create relation with existing model
 $post = Post::factory()->create();
 $comment = $this->createFrom($post)->with(Comment::class)->get(Comment::class);
 ```
+
+## Mocking
+```php
+    $foo = Sonata::createMock('where()->first()->content', 'hello');
+```
+now you call $foo->where()->first()->content, will equal to 'hello'
