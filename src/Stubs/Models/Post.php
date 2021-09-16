@@ -4,6 +4,7 @@ namespace Sonata\Stubs\Models;
 use App\Models\User;
 use Sonata\Stubs\Models\Tag;
 use Sonata\Stubs\Models\Media;
+use Sonata\Stubs\Models\Teaser;
 use Sonata\Stubs\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Sonata\Stubs\factories\PostFactory;
@@ -43,5 +44,9 @@ class Post extends Model
     public function activeTags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function teaser() {
+        return $this->hasOne(Teaser::class);
     }
 }

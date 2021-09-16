@@ -11,6 +11,7 @@ use Sonata\Relations\MorphToMany;
 use Sonata\Relations\AbstractRelation;
 use Illuminate\Database\Eloquent\Model;
 use Sonata\Relations\BelongsToMany;
+use Sonata\Relations\HasOne;
 
 class MethodResolver
 {
@@ -98,7 +99,8 @@ class MethodResolver
             'belongsTo' => new BelongsTo,
             'hasMany' => new HasMany,
             'morphMany' => new MorphMany,
-            'morphToMany' => new MorphToMany
+            'morphToMany' => new MorphToMany,
+            'hasOne' => new HasOne
         ];
     }
 }

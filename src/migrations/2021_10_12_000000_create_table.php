@@ -13,6 +13,13 @@ class CreateTable extends Migration
      */
     public function up()
     {
+        Schema::create('teasers', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('post_id')->nullable();
+            $table->string('body')->default('');
+            $table->timestamps();
+        });
+
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');

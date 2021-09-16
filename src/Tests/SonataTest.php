@@ -7,11 +7,12 @@ use App\Models\User;
 use Illuminate\Support\Arr;
 use Sonata\Stubs\Models\Tag;
 use Sonata\Stubs\Models\Post;
+use Sonata\Stubs\Models\Role;
 use Sonata\Stubs\Models\Media;
+use Sonata\Stubs\Models\Teaser;
 use Sonata\Stubs\Models\Comment;
 use Sonata\Traits\LetsPlaySonata;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Sonata\Stubs\Models\Role;
 
 class SonataTest extends TestCase
 {
@@ -156,6 +157,15 @@ class SonataTest extends TestCase
         $this->assertEquals(
             $role->name,
             $user->roles->first()->name
+        );
+    }
+
+    /** @test */
+    public function can_handle_has_one_relation() {
+        [$post, $teaser] = $this->create(Post::class)->with(Teaser::class)->GetCreated();
+        $this->assertEquals(
+            $teaser->body,
+            $post->teaser->body
         );
     }
 
