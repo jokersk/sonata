@@ -19,4 +19,8 @@ class Teaser extends Model
     protected static function newFactory() {
         return TeaserFactory::new();
     }
+
+    public function media() {
+        return $this->morphOne(Media::class, 'mediaable');
+    }
 }

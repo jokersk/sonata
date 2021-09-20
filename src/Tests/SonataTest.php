@@ -161,6 +161,18 @@ class SonataTest extends TestCase
     }
 
     /** @test */
+    public function can_handle_morphOne_relation() {
+        [$teaser] = $this->create(Teaser::class)->with(Media::class, [
+            'url' => 'foo123'
+        ])->created();
+
+        $this->assertEquals(
+            'foo123',
+            $teaser->media->url
+        );
+    }
+
+    /** @test */
     public function can_handle_has_one_relation() {
         [$post, $teaser] = $this->create(Post::class)->with(Teaser::class)->GetCreated();
         $this->assertEquals(

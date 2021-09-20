@@ -4,14 +4,15 @@ namespace Sonata;
 
 use ReflectionMethod;
 use Illuminate\Support\Str;
+use Sonata\Relations\HasOne;
 use Sonata\Relations\HasMany;
+use Sonata\Relations\MorphOne;
 use Sonata\Relations\BelongsTo;
 use Sonata\Relations\MorphMany;
 use Sonata\Relations\MorphToMany;
+use Sonata\Relations\BelongsToMany;
 use Sonata\Relations\AbstractRelation;
 use Illuminate\Database\Eloquent\Model;
-use Sonata\Relations\BelongsToMany;
-use Sonata\Relations\HasOne;
 
 class MethodResolver
 {
@@ -100,7 +101,8 @@ class MethodResolver
             'hasMany' => new HasMany,
             'morphMany' => new MorphMany,
             'morphToMany' => new MorphToMany,
-            'hasOne' => new HasOne
+            'hasOne' => new HasOne,
+            'morphOne' => new MorphOne
         ];
     }
 }
