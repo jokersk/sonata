@@ -43,11 +43,11 @@ $post = $this->create(Post::class)->getCreated();
 now we have a model `\App\Models\Comment`, and in `\App\Models\Post` model have HasMany relation like
 
 ```php
-    public function comments()
+public function comments()
 
-    {
-        return $this->hasMany(Comment::class);
-    }
+{
+    return $this->hasMany(Comment::class);
+}
 
 ```
 
@@ -127,6 +127,6 @@ $comment = $this->createFrom($post)->with(Comment::class)->get(Comment::class);
 
 ## Mocking
 ```php
-    $foo = Sonata::createMock('where()->first()->content', 'hello');
+$foo = Sonata::createMock('where()->first()->content', 'hello');
 ```
 now you call $foo->where()->first()->content, will equal to 'hello'
