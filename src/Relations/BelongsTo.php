@@ -1,4 +1,5 @@
 <?php
+
 namespace Sonata\Relations;
 
 use Illuminate\Support\Str;

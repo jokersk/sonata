@@ -59,9 +59,11 @@ class Sonata
     protected function save($class)
     {
         return $this->create($this->createCount, $class, function ($children) use ($class) {
-            foreach ($this->created[$this->prevCreated] as $key => $value) {
-                $relation = (new MethodResolver)->resolve($value, $class);
-                $relation->handle($value, $children[$key]);
+            foreach ($this->created[$this->prevCreated] as $key => $prevClass) {
+                foreach ($children as $child) {
+                    $relation = (new MethodResolver)->resolve($prevClass, $class);
+                    $relation->handle($prevClass, $child);
+                }
             }
         });
     }
@@ -74,11 +76,24 @@ class Sonata
         return $this;
     }
 
-    public function with($class, $attributes = null)
+    public function with()
     {
-        if (!is_null($attributes)) {
-            $this->attributes = $attributes;
+        $args = func_get_args();
+        $argsCount = func_num_args();
+        if (is_numeric($args[0])) {
+            $this->createCount = $args[0];
+            $class = $args[1];
+            if ($argsCount === 3 && is_array($args[2])) {
+                $this->attributes = $args[2];
+            }
         }
+        if (is_string($args[0])) {
+            $class = $args[0];
+            if ($argsCount === 2 && is_array($args[1])) {
+                $this->attributes = $args[1];
+            }
+        }
+
         return $this->save($class);
     }
 
@@ -127,7 +142,8 @@ class Sonata
         return $this;
     }
 
-    public static function createMock($path, $result) {
+    public static function createMock($path, $result)
+    {
         $paths = explode("->", $path);
         $class = new MockClass;
         $first = array_shift($paths);
@@ -140,26 +156,31 @@ class Sonata
         return $class;
     }
 }
-class MockParse {
+class MockParse
+{
     protected $string;
     protected $match;
-    public function __construct(String $string) {
+    public function __construct(String $string)
+    {
         $this->string = $string;
         preg_match('/(.*)\(.*\)/', $this->string, $match);
         $this->match = $match;
     }
-    public function toString() {
-        return $this->isFunc()? $this->funcName() : $this->string;
+    public function toString()
+    {
+        return $this->isFunc() ? $this->funcName() : $this->string;
     }
-    public function funcName() {
+    public function funcName()
+    {
         return $this->match[1];
     }
     public function isFunc()
     {
-        return $this->match[0]?? false;
+        return $this->match[0] ?? false;
     }
 }
-class MockClass {
+class MockClass
+{
     public $attributes = [];
     public function __call($name, $arguments)
     {

@@ -86,6 +86,14 @@ class SonataTest extends TestCase
     }
 
     /** @test */
+    public function can_create_many_relation_with_number()
+    {
+        $posts = $this->create(Post::class)->with(2, Comment::class)->get(Post::class);
+
+        $this->assertCount(2, $posts->fresh()->comments);
+    }
+
+    /** @test */
     public function can_get_multiple_created_models_by_array()
     {
         [$posts, $comments] = $this->create(2, Post::class)->with(Comment::class)->getCreated([Post::class, Comment::class]);
@@ -131,7 +139,8 @@ class SonataTest extends TestCase
     }
 
     /** @test */
-    public function can_handle_morphToMany() {
+    public function can_handle_morphToMany()
+    {
         [$post, $tag] = $this->create(Post::class)->with(Tag::class)->getCreated();
 
         $this->assertEquals(
@@ -141,7 +150,8 @@ class SonataTest extends TestCase
     }
 
     /** @test */
-    public function can_defind_function_name() {
+    public function can_defind_function_name()
+    {
         [$post, $tag] = $this->create(Post::class)->by('activeTags')->with(Tag::class)->getCreated();
 
         $this->assertEquals(
@@ -151,7 +161,8 @@ class SonataTest extends TestCase
     }
 
     /** @test */
-    public function can_handle_belongsToMany_relation() {
+    public function can_handle_belongsToMany_relation()
+    {
         [$user, $role] = $this->create(User::class)->with(Role::class)->GetCreated();
 
         $this->assertEquals(
@@ -161,7 +172,8 @@ class SonataTest extends TestCase
     }
 
     /** @test */
-    public function can_handle_morphOne_relation() {
+    public function can_handle_morphOne_relation()
+    {
         [$teaser] = $this->create(Teaser::class)->with(Media::class, [
             'url' => 'foo123'
         ])->created();
@@ -173,7 +185,8 @@ class SonataTest extends TestCase
     }
 
     /** @test */
-    public function can_handle_has_one_relation() {
+    public function can_handle_has_one_relation()
+    {
         [$post, $teaser] = $this->create(Post::class)->with(Teaser::class)->GetCreated();
         $this->assertEquals(
             $teaser->body,
@@ -182,7 +195,8 @@ class SonataTest extends TestCase
     }
 
     /** @test */
-    public function can_create_child_with_existing_model() {
+    public function can_create_child_with_existing_model()
+    {
         $post = Post::factory()->create();
         $comment = $this->createFrom($post)->with(Comment::class)->get(Comment::class);
 
