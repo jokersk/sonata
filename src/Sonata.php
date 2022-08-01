@@ -142,10 +142,16 @@ class Sonata
         return $this;
     }
 
-    public static function createMock($path, $result)
+    public static function createMock($path, $result = null)
     {
-        $paths = explode("->", $path);
         $class = new MockClass;
+        if (is_array($path)) {
+            foreach ($path as $key => $value) {
+                $class->attributes += Sonata::createMock($key, $value)->attributes;
+            }
+            return $class;
+        }
+        $paths = explode("->", $path);
         $first = array_shift($paths);
         $first = new MockParse($first);
         if (count($paths) == 0) {
