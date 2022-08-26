@@ -1,13 +1,13 @@
 <?php
-namespace Sonata;
 
-use Illuminate\Support\Str;
+namespace Sonata;
 
 class Factory
 {
-    public static function factory($class, $count, $attributes = []) {
+    public static function factory($class, $count, $attributes = [])
+    {
         $version = app()::VERSION;
-        if (Str::startsWith($version, "8")) {
+        if (version_compare($version, '8') >= 0) {
             return $class::factory($attributes)->count($count)->create();
         }
 
